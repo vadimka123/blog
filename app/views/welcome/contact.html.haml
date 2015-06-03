@@ -1,0 +1,48 @@
+- provide(:title, 'Контакты')
+.contact-map
+  .maps-container
+    .maps-thumb
+      %iframe{:frameborder => '0', :height => '450', :src => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2677.4845661545055!2d35.124550000000006!3d47.84957800000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dc672f173d2ed3%3A0x6fa528eb35232f04!2z0LLRg9C7LiA0MC3RgNGW0YfRh9GPINCg0LDQtNGP0L3RgdGM0LrQvtGXINCj0LrRgNCw0ZfQvdC4LCA2NC85LCDQl9Cw0L_QvtGA0L7QttGB0LrQuNC5INGN0LvQtdC60YLRgNC-0YLQtdGF0L3QuNGH0LXRgdC60LjQuSDQutC-0LvQu9C10LTQtiwg0JfQsNC_0L7RgNGW0LbQttGPLCDQl9Cw0L_QvtGA0ZbQt9GM0LrQsCDQvtCx0LvQsNGB0YLRjA!5e0!3m2!1sru!2sua!4v1429364484964', :style => 'border:0', :width => '600'}
+%section#subheader
+  .container
+    .row
+      .span12
+        %p Будем на связи
+.container.content
+  .row
+    .pin-article.span8.right-sidebar
+      %article.article
+        %h3.title
+          Контактная форма
+        .container-fluid
+          .row-fluid
+            .span12
+              %form#contact-form-example.contact-form{:action => '#', :enctype => 'multipart/form-data', :method => 'post'}
+                .text-field-half
+                  %input#contact-name{:name => 'contact-name', :placeholder => 'Ваше имя', :type => 'text'}/
+                .text-field-half
+                  %input#contact-email{:name => 'contact-email', :placeholder => 'Ваша электронная почта', :type => 'text'}/
+                .text-field-full
+                  %textarea#contact-message{:cols => '45', :name => 'contact-message', :rows => '8'}
+                %p
+                  %span.error Ошибка при отправке электронной почты, пожалуйста, проверьте введенные данные.
+                %p.form-submit
+                  %input#submit.buttons{:name => 'send', :type => 'submit', :value => 'Отправить'}/
+    %section#sidebar.span4
+      .row
+        .pin-article.span4
+          .article
+            %h3.title Контактная информация
+            %ul.contact-info
+              %li
+                %i.icon-map-marker>
+                40 лет Советской Украины, 64, Запорожье
+              %li
+                %i.icon-mobile-phone>
+                +380660283374
+              %li
+                %i.icon-envelope-alt>
+                goy_v@mail.ru
+              %li
+                %i.icon-skype>
+                vadimka

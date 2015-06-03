@@ -1,0 +1,177 @@
+- provide(:title, 'Добавление нового поста')
+.container.content
+  .row
+    .pin-article.span6{:style => 'float: none; margin: 0 auto;'}
+      %article.article
+        %center
+          %h3.title
+            Добавление нового поста
+        .container-fluid
+          .row-fluid
+            .span12
+              = form_for @post, url: {action: 'create'} , html: {class: 'form', :multipart => true, :remote => true, :name => 'post',  'ng-controller' => 'newPost', :novalidate => true } do |f|
+                %h5 Введите заголовок поста
+                %p
+                  = f.text_field :title, :style => 'min-width: 390px;', autofocus: true, 'ng-model' => 'title', :required => true
+                %span{'ng-show' => "post['post[title]'].$dirty && post['post[title]'].$invalid", :style => 'color:red'}
+                  %span{'ng-show' => "post['post[title]'].$error.required"} Заголовок не может быть пустым
+                %h5 Выберите категорию
+                %p
+                  = f.select :category_id, options_from_collection_for_select(@category, '_id', 'name'), {}, :multiple => true, 'ng-multiple' => true, :style => 'min-width: 400px;', 'ng-model' => 'category_id', :required => true
+                %span{'ng-show' => "post['post[category_id]'].$dirty && post['post[category_id]'].$invalid", :style => 'color:red'}
+                  %span{'ng-show' => "post['post[category_id]'].$error.required"} Выберите хотя бы одну категорию
+                %h5 Введите поисковые теги через запятую
+                %p
+                  = f.text_field :tag_list, :style => 'min-width: 390px;', 'ng-model' => 'tag_list', :required => true
+                %span{'ng-show' => "post['post[tag_list]'].$dirty && post['post[tag_list]'].$invalid", :style => 'color:red'}
+                  %span{'ng-show' => "post['post[tag_list]'].$error.required"} Список тегов не может быть пустым
+                %h5 Введите содержимое поста
+                %p
+                  = f.text_area :text, :style => 'width: 390px; height: 150px;', 'ng-model' => 'text', :required => true
+                %span{'ng-show' => "post['post[text]'].$dirty && post['post[text]'].$invalid", :style => 'color:red'}
+                  %span{'ng-show' => "post['post[text]'].$error.required"} Содержимое не может быть пустым
+                %h5 Выберите тип поста
+                %ui-select{'ng-disabled' => 'disabled', 'ng-model' => 'type', 'on-select' => 'someFunction($item, $model)', :style => 'min-width: 400px;', :theme => 'select2', :title => 'Выберите тип поста', :required => true}
+                  %ui-select-match
+                    = '{{$select.selected.type}}'.html_safe
+                  %ui-select-choices{:repeat => 'post.detail as post in posts | propsFilter: {type: $select.search}'}
+                    %div{'ng-bind-html' => 'post.type | highlight: $select.search'}
+                    %small
+                      = '{{post.detail}}'.html_safe
+                %br
+                %br
+                %div{'ng-if' => "eventResult.item.type == 'Обычный пост'"}
+                  %h5 Выберите изображение для поста
+                  = f.fields_for :standart, html: {:multipart => true, :remote => true} do |s|
+                    %p
+                      = s.file_field :image, class: 'filestyle', :'data-buttonText' => 'Выберите изображение', :accept => 'image/*', 'ng-model' => 'image', :required => true, 'valid-file' => true
+                    %span{'ng-show' => "post['post[standart][image]'].$dirty && post['post[standart][image]'].$invalid", :style => 'color:red'}
+                      %span{'ng-show' => "post['[standart][image]'].$error.required"} Необходимо выбрать изображение
+                %div{'ng-if' => "eventResult.item.type == 'Галлерея'"}
+                  %h5 Выберите несколько изображений для галлереи
+                  %p
+                    = file_field_tag 'images[]', type: :file, multiple: true, class: 'filestyle', 'data-buttonText' => 'Выберите изображение', :accept => 'image/*', 'ng-model' => 'images', :required => true, 'valid-file' => true
+                  %span{'ng-show' => "post['images[]'].$dirty && post['images[]'].$invalid", :style => 'color:red'}
+                    %span{'ng-show' => "post['images[]'].$error.required"} Необходимо выбрать несколько изображений
+                %div{'ng-if' => "eventResult.item.type == 'Музыкальный пост'"}
+                  %h5 Выберите тип музыкального поста
+                  %ui-select{'ng-disabled' => 'disabled', 'ng-model' => 'type.music', 'on-select' => 'musicFunction($item, $model)', :style => 'width: 400px;', :theme => 'selectize', :required => true}
+                    %ui-select-match{:placeholder => 'Выберите тип музыкального поста из списка'}
+                      = '{{$select.selected.type}}'.html_safe
+                    %ui-select-choices{:repeat => 'music in musics | filter: $select.search'}
+                      %span{'ng-bind-html' => 'music.type | highlight: $select.search'}
+                  %div{'ng-if' => "musicResult.item.type == 'С прикреплённой музыкой'"}
+                    %h5 Выберите файл с музыкой
+                    = f.fields_for :upload do |u|
+                      %p
+                        = u.file_field :file, :style => 'min-width: 390px;', class: 'filestyle', :'data-buttonText' => 'Выберите аудиофайл', :accept => 'audio/*', 'ng-model' => 'audio', :required => true, 'valid-file' => true
+                      %span{'ng-show' => "post['post[upload][file]'].$dirty && post['post[upload][file]'].$invalid", :style => 'color:red'}
+                        %span{'ng-show' => "post['[upload][file]'].$error.required"} Необходимо выбрать аудиофайл
+                  %div{'ng-if' => "musicResult.item.type == 'С Iframe-кодом'"}
+                    %h5 Вставьте Iframe-код
+                    = f.fields_for :iframe do |i|
+                      %P
+                        = i.text_field :href, :style => 'min-width: 390px;', 'ng-model' => 'audioframe', :required => true
+                      %span{'ng-show' => "post['post[iframe][href]'].$dirty && post['post[iframe][href]'].$invalid", :style => 'color:red'}
+                        %span{'ng-show' => "post['[iframe][href]'].$error.required"} Iframe-код не может быть пустым
+                %div{'ng-if' => "eventResult.item.type == 'Видео пост'"}
+                  %h5 Выберите тип видео поста
+                  %ui-select{'ng-disabled' => 'disabled', 'ng-model' => 'type.video', 'on-select' => 'videoFunction($item, $model)', :style => 'width: 400px;', :theme => 'selectize', :required => true}
+                    %ui-select-match{:placeholder => 'Выберите тип видео поста из списка'}
+                      = '{{$select.selected.type}}'.html_safe
+                    %ui-select-choices{:repeat => 'video in videos | filter: $select.search'}
+                      %span{'ng-bind-html' => 'video.type | highlight: $select.search'}
+                  %div{'ng-if' => "videoResult.item.type == 'С прикреплённым видео'"}
+                    %h5 Выберите файл с видео
+                    = f.fields_for :upload do |up|
+                      %p
+                        = up.file_field :file, :style => 'min-width: 390px;', class: 'filestyle', 'data-buttonText' => 'Выберите видеофайл', :accept => 'video/*', 'ng-model' => 'videofile', :required => true, 'valid-file' => true
+                      %span{'ng-show' => 'videofile.$dirty && videofile.$invalid', :style => 'color:red'}
+                        %span{'ng-show' => 'videofile.$error.required'} Необходимо выбрать видеофайл
+                  %div{'ng-if' => "videoResult.item.type == 'С ссылкой на видео'"}
+                    %h5 Вставьте ссылку на видео
+                    = f.fields_for :iframe do |ifr|
+                      = ifr.text_field :href, :style => 'min-width: 390px;', 'ng-model' => 'videor', :required => true, 'valid-url' => true
+                      %span{'ng-show' => 'videor.$dirty && videor.$invalid', :style => 'color:red'}
+                        %span{'ng-show' => 'videor.$error.required'} Ссылка на видео не может быть пустой
+                        %span{'ng-show' => 'videor.$error.url'} Не найдено видео по данной ссылке
+                  %div{'ng-if' => "videoResult.item.type == 'Записать стрим'"}
+                    %h5 Запись стрима
+                    = f.fields_for :stream do |str|
+                      = str.hidden_field :name, 'ng-model' => 'titlestream', :required => true
+                    %span{'ng-show' => "titlestream.$dirty && titlestream.$invalid", :style => 'color:red'}
+                      %span{'ng-show' => "titlestream.$error.required"} Необходимо записать видеострим
+                    %section.experiment
+                      .inner
+                        %video#video{:loop => true, :controls => true, :muted => true, :width => '400px', :height => '300px'}
+                        %br
+                        %button#start-recording{:type => 'button'} Начать запись стрима
+                        %button#stop-recording{:type => 'button', :disabled => true} Остановить и загрузить
+                        :javascript
+                          var videoElement = document.getElementById('video');
+                          var startRecording = document.getElementById('start-recording');
+                          var stopRecording = document.getElementById('stop-recording');
+                          var streamField = document.getElementById('post_stream_name');
+                          startRecording.onclick = function() {
+                            startRecording.disabled = true;
+                            stopRecording.disabled = false;
+                            captureUserMedia(function(stream) {
+                              window.audioVideoRecorder = window.RecordRTC(stream, {
+                                type: 'video'
+                              });
+                              window.audioVideoRecorder.startRecording();
+                            });
+                          };
+                          stopRecording.onclick = function() {
+                            stopRecording.disabled = true;
+                            startRecording.disabled = false;
+                            window.audioVideoRecorder.stopRecording(function(url) {
+                              videoElement.src = url;
+                              videoElement.muted = false;
+                              videoElement.play();
+                              videoElement.onended = function() {
+                                videoElement.pause();
+                                videoElement.src = URL.createObjectURL(audioVideoRecorder.getBlob());
+                              };
+                              document.getElementById('cover').style.display = 'block';
+                              document.body.style.overflowY = 'hidden';
+                              var data = new FormData();
+                              var name = (new Date()).getTime();
+                              data.append("video", audioVideoRecorder.getBlob(), name + ".webm");
+                              var oReq = new XMLHttpRequest();
+                              oReq.open("POST", "/records/");
+                              oReq.send(data);
+                              oReq.onload = function(oEvent) {
+                                if (oReq.status == 200) {
+                                  console.log("Uploaded");
+                                  streamField.value = name;
+                                  document.getElementById('cover').style.display = 'none';
+                                  document.body.style.overflowY = 'visible';
+                                } else {
+                                  console.log("Error " + oReq.status + " occurred uploading your file.");
+                                }
+                              };
+                            });
+                          };
+                          function captureUserMedia(callback) {
+                            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+                            navigator.getUserMedia({
+                              audio: true,
+                              video: true
+                            }, function(stream) {
+                              videoElement.src = URL.createObjectURL(stream);
+                              videoElement.muted = true;
+                              videoElement.controls = true;
+                              videoElement.play();
+                              callback(stream);
+                            }, function(error) {
+                              console.error(error);
+                            });
+                          }
+                %br
+                %center
+                  %p.submit
+                    = f.submit 'Сохранить пост', 'ng-disabled' => 'post.$invalid'
+%br
+%br
+%br

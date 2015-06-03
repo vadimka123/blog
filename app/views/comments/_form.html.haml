@@ -1,0 +1,11 @@
+%section.comment-form
+  #respond.comment-respond
+    %h3#reply-title.comment-reply-title
+      Написание нового комментария
+    = form_for @comment, html: {class: 'comment-form', id: 'commentform', remote: true} do |f|
+      %p.comment-form-comment
+        = f.label :text, 'Текст комментария'
+        = f.text_area :text, 'aria-describedby' => 'form-allowed-tags', 'aria-required' => 'true', :cols => '45', :name => 'comment', :required => 'required', :rows => '8', :id => 'text_comment'
+        = hidden_field_tag 'post_id', @post.id
+      %p.form-submit
+        = f.submit 'Добавить комментарий', :class => 'submit', :id => 'submit'

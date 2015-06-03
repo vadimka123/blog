@@ -1,0 +1,267 @@
+- provide(:title, 'BlogNotik')
+%section#subheader
+  .container
+    .row
+      .span12
+        %p Welcome to BlogNotik.
+.container.content
+  .row
+    .span8.right-sidebar
+      #masonry.row
+        - @posts.each do |post|
+          - if post._type == 'Iframe'
+            .post.pin-article.format-video.span4
+              - @video = nil
+              - begin
+                - @video = VideoInfo.new(post.href)
+              - rescue
+              - unless @video.nil?
+                .pin-container.video-thumb
+                  = @video.embed_code.html_safe
+              - else
+                %article.article
+                  .soundcloud
+                    = post.href.html_safe
+              %article.article
+                %h3.title
+                  %a{:href => '/posts/' + post.id}
+                    = post.title
+                .line
+                  .entry-info
+                    .entry-date
+                      %strong Опубликованно:
+                      = I18n.l post.date, :format => '%e %B %Y'
+                      %span.sep
+                    .entry-comments
+                      %strong Комментариев:
+                      - begin
+                        = post.comment_id.length
+                      - rescue
+                        = 'нет'
+                    .entry-standard
+                      %strong Категории:
+                      - @cat = Array.new
+                      - post.category_id.each do |x|
+                        - @c = Category.find(x)
+                        - @cat.push("<a href='/categories/#{@c.id}'>#{@c.name}</a>")
+                      = @cat1 = @cat.join(', ').html_safe
+                %p
+                  = post.text
+                %p
+                  %a.button{:href => '/posts/' + post.id} Читать далее →
+          - if post._type == 'Standart'
+            .post-2524.post.type-post.status-publish.format-standard.has-post-thumbnail.hentry.category-travel.pin-article.span4
+              .pin-container
+                .overlay-image.blog-thumb
+                  = image_tag post.image.url, :class => 'attachment-blog wp-post-image'
+                  %a.overlay.link{:href => '/posts/' + post.id}
+              %article.article
+                %h3.title
+                  %a{:href => '/posts/' + post.id}
+                    = post.title
+                .line
+                  .entry-info
+                    .entry-date
+                      %strong Опубликованно:
+                      = I18n.l post.date, :format => '%e %B %Y'
+                      %span.sep
+                    .entry-comments
+                      %strong Комментариев:
+                      - begin
+                        = post.comment_id.length
+                      - rescue
+                        = 'нет'
+                    .entry-standard
+                      %strong Категории:
+                      - @cat = Array.new
+                      - post.category_id.each do |x|
+                        - @c = Category.find(x)
+                        - @cat.push("<a href='/categories/#{@c.id}'>#{@c.name}</a>")
+                      = @cat1 = @cat.join(', ').html_safe
+                %p
+                  = post.text
+                %p
+                  %a.button{:href => '/posts/' + post.id} Читать далее →
+          - if post._type == 'Gallery'
+            .post-2536.post.type-post.status-publish.format-gallery.has-post-thumbnail.hentry.category-gallery-2.category-travel.tag-gallery.tag-media.tag-travel-2.pin-article.span4
+              :javascript
+                jQuery(document).ready(function($){
+                  jQuery('.flexslider').flexslider({
+                    animation : 'fade',
+                    direction : 'horizontal',
+                    reverse : false,
+                    slideshowSpeed : 7000,
+                    animationSpeed : 600,
+                    directionNav: true,
+                    controlNav: false,
+                    eyboardNav: false,
+                    prevText: "<",
+                    nextText: ">",
+                    touch: true,
+                  });
+                });
+              .pin-container.slider-flexslider
+                %section.flexslider
+                  %ul.slides
+                    - @img = Image.find(post.image_id)
+                    - @img.each do |x|
+                      %li
+                        = image_tag x.image.url
+              %article.article
+                %h3.title
+                  %a{:href => '/posts/' + post.id}
+                    = post.title
+                .line
+                  .entry-info
+                    .entry-date
+                      %strong Опубликованно:
+                      = I18n.l post.date, :format => '%e %B %Y'
+                      %span.sep
+                    .entry-comments
+                      %strong Комментариев:
+                      - begin
+                        = post.comment_id.length
+                      - rescue
+                        = 'нет'
+                    .entry-standard
+                      %strong Категории:
+                      - @cat = Array.new
+                      - post.category_id.each do |x|
+                        - @c = Category.find(x)
+                        - @cat.push("<a href='/categories/#{@c.id}'>#{@c.name}</a>")
+                      = @cat1 = @cat.join(', ').html_safe
+                %p
+                  = post.text
+                %p
+                  %a.button{:href => '/posts/' + post.id} Читать далее →
+                :javascript
+                  jQuery(window).load(function($){
+                  var $container = jQuery('#masonry');
+                  $container.imagesLoaded(function(){
+                    $container.masonry({
+                      itemSelector: '.pin-article',
+                      isAnimated: true
+                    });
+                  });
+                  });
+          - if post._type == 'Stream'
+            .post.pin-article.format-video.span4
+              .pin-container.video-thumb
+                %video#video-js.vjs-default-skin{:controls => '', 'data-setup' => "{\"controls\":true}", :poster => "/upload/#{post.name}.png", :preload => 'auto'}
+                  %source{:src => "/upload/#{post.name}.mp4", :type => 'video/mp4'}
+              %article.article
+                %h3.title
+                  %a{:href => '/posts/' + post.id}
+                    = post.title
+                .line
+                  .entry-info
+                    .entry-date
+                      %strong Опубликованно:
+                      = I18n.l post.date, :format => '%e %B %Y'
+                      %span.sep
+                    .entry-comments
+                      %strong Комментариев:
+                      - begin
+                        = post.comment_id.length
+                      - rescue
+                        = 'нет'
+                    .entry-standard
+                      %strong Категории:
+                      - @cat = Array.new
+                      - post.category_id.each do |x|
+                        - @c = Category.find(x)
+                        - @cat.push("<a href='/categories/#{@c.id}'>#{@c.name}</a>")
+                      = @cat1 = @cat.join(', ').html_safe
+                %p
+                  = post.text
+                %p
+                  %a.button{:href => '/posts/' + post.id} Читать далее →
+          - if post._type == 'Upload'
+            .post.pin-article.format-video.span4
+              - type_temp = MIME::Types.type_for(post.file.original_filename).first.content_type
+              - type = type_temp[0..4]
+              - if type == 'appli'
+                .pin-container.video-thumb
+                  = video_tag(post.file.url, controls: true, preload: 'auto', poster: post.poster.url)
+              - elsif type == 'audio'
+                .pin-container
+                  = image_tag(post.poster)
+                  = audio_tag(post.file, :controls => '', :preload => 'auto')
+              %article.article
+                %h3.title
+                  %a{:href => '/posts/' + post.id}
+                    = post.title
+                .line
+                  .entry-info
+                    .entry-date
+                      %strong Опубликованно:
+                      = I18n.l post.date, :format => '%e %B %Y'
+                      %span.sep
+                    .entry-comments
+                      %strong Комментариев:
+                      - begin
+                        = post.comment_id.length
+                      - rescue
+                        = 'нет'
+                    .entry-standard
+                      %strong Категории:
+                      - @cat = Array.new
+                      - post.category_id.each do |x|
+                        - @c = Category.find(x)
+                        - @cat.push("<a href='/categories/#{@c.id}'>#{@c.name}</a>")
+                      = @cat1 = @cat.join(', ').html_safe
+                %p
+                  = post.text
+                %p
+                  %a.button{:href => '/posts/' + post.id} Читать далее →
+      .clear
+    %section#sidebar.span4.right-sidebar
+      .row
+        .pin-article.span4
+          .article
+            %section.contact-form
+              = form_tag '/search', :method => 'get', :id => 'searchform' do
+                %div
+                  = text_field_tag :query, params[:query], :id => 's', :class => 'input-search', :placeholder => 'Искать здесь'
+                  = submit_tag 'Поиск', :name => nil, :class => 'button-search', :id => 'searchsubmit'
+              .clear
+        .pin-article.span4
+          .article
+            %h3.title Популярные теги
+            .tagcloud
+              - @tag_pop.each do |tag|
+                %a.tag-link-14{:href => '/tags/' + tag.id, :style => 'font-size: 8pt;'}
+                  = tag.tag
+        .pin-article.span4
+          .article
+            %h3.title Последние посты
+            %ul
+              - @post_last.each do |post|
+                %li
+                  %a{:href => '/posts/' + post.id}
+                    = post.title
+        .pin-article.span4
+          .article
+            %h3.title Категории
+            %ul#recentcategories
+              - @categories.each do |c|
+                %li.recentcategories
+                  %a{:href => '/categories/' + c.id}
+                    = c.name
+        .pin-article.span4
+          .article
+            %h3.title Календарь
+            #calendar_wrap
+              %table#wp-calendar
+                %caption
+                  = I18n.l Date.today, :format => '%e %B %Y'
+                %thead
+                  %tr
+                    %th{:scope => 'col', :title => 'Понедельник'} Пн
+                    %th{:scope => 'col', :title => 'Вторник'} Вт
+                    %th{:scope => 'col', :title => 'Среда'} Ср
+                    %th{:scope => 'col', :title => 'Четверг'} Чт
+                    %th{:scope => 'col', :title => 'Пятница'} Пт
+                    %th{:scope => 'col', :title => 'Суббота'} Сб
+                    %th{:scope => 'col', :title => 'Воскресенье'} Вс
+                = @calendar.html_safe

@@ -1,0 +1,17 @@
+ru:
+  errors:
+    messages:
+      not_saved: Ошибка при регистрации
+    models:
+      user:
+        attributes:
+          avatar:
+            spoofed_media_type:
+  devise:
+    failure:
+      user:
+        invalid: Неверный логин или пароль
+    sessions:
+      user:
+        signed_out: ''
+        signed_in: ''

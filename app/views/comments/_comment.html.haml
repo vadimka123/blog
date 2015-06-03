@@ -1,0 +1,21 @@
+#comments
+  %h3
+    = "Комментариев: #{@post.comment_id.count}"
+  %section
+    %ul.commentlist
+      - @post.comment_id.each do |com|
+        - comment = Comment.find(com)
+        %li#li-comment-54.comment.byuser.comment-author-alexvtn.bypostauthor.even.thread-even.depth-1
+          %article#comment-54.comment-container
+            .comment-avatar
+              - user = User.find(comment.user_id)
+              = image_tag(user.avatar.url, size: '80x80')
+            .comment-text
+              %header.comment-author
+                %span.author
+                  %cite
+                    = user.name
+                %time.comment-date{:datetime => comment.datetime}
+                  = I18n.l comment.datetime, :format => '%e %B %Y в %H:%M'
+              %p
+                = comment.text

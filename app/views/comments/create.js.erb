@@ -1,0 +1,3 @@
+$("#comments").empty();
+$("<%= escape_javascript(render 'comments/comment') %>").appendTo("#comments");
+$("#text_comment").val('');

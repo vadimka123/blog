@@ -1,0 +1,94 @@
+!!!
+%html{:lang => 'ru-RU'}
+  %head
+    %meta{:charset => 'UTF-8'}/
+    %meta{:content => 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type'}/
+    %title
+      = yield(:title)
+    %meta{:content => 'width=device-width, initial-scale=1.0, maximum-scale=1.2, user-scalable=yes', :name => 'viewport'}/
+    %link{:href => '/images/favicon.ico', :rel => 'shortcut icon'}/
+    = stylesheet_link_tag :application, :media => 'all'
+    = javascript_include_tag :application
+    = csrf_meta_tags
+    /[if IE 8]
+      %link{:href => 'http://fonts.googleapis.com/css?family=Gudea', :rel => 'stylesheet', :type => 'text/css'}/
+      %script{:src => 'http://html5shiv.googlecode.com/svn/trunk/html5.js'}
+      %script{:src => 'http://demo.themeinprogress.com/nova/wp-content/themes/nova/scripts/selectivizr-min.js', :type => 'text/javascript'}
+    %link{:href => 'http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Montez|Oxygen|Montez|Oxygen|Yanone+Kaffeesatz', :rel => 'stylesheet', :type => 'text/css'}/
+    %style#customstyle{:type => 'text/css'}
+      :cdata
+        body { background: url(http://demo.themeinprogress.com/nova/wp-content/themes/nova/images/background/patterns/pattern12.jpg);background-repeat:repeat;background-color:#f3f3f3;background-attachment:normal; } #header, nav#mainmenu ul ul { background-color: #262626; } nav#mainmenu ul ul { border-top-color: #262626; } #subheader { background-color: #212121; } #header, nav#mainmenu ul ul li a, #subheader { border-color: #333333; } nav#mainmenu ul ul { border-left-color: #333333; border-right-color: #333333; border-bottom-color: #333333; } .bottom_widget { background-color: #262626; } .bottom_socials { background-color: #212121; } #footer { background-color: #262626; } #footer, .bottom_socials, .bottom_widget, .bottom_widget ul.contact-info li, .bottom_widget .widget-box li { border-color: #333333; } #logo a { font-family:'Montez',Verdana, Geneva, sans-serif;font-size:55px; } nav#mainmenu ul li a, nav#mainmenu ul ul li a { font-family:'Oxygen',Verdana, Geneva, sans-serif;font-size:14px; } .article p, .article li, .article address, .article dd, .article blockquote, .article td, .article th, #searchform input[type=text], #searchform textarea, .contact-form input[type=text], .contact-form textarea, .comment-form input[type=text], .comment-form textarea, #searchform input[type=submit], .contact-form input[type=submit], .comment-form input[type=submit], .entry-tags, .entry-info, .widget-category li a, #wp-calendar th, #wp-calendar #today, #wp-calendar #today a, #wp-calendar caption, ul#twitter_update_list li, .tagcloud a, .tabs-container p, .tabs li a, .toggle, .toggle_container h5.element, .wp-pagenavi a, .wp-pagenavi a:link, .wp-pagenavi span.current, p, li, address, dd, blockquote, td, th, .textwidget, .button, .btn, .bottom a, .bottom p, .bottom li, .bottom address, .bottom dd, .bottom blockquote, .bottom td, .bottom th, .bottom .textwidget, #footer a, #footer p, #footer li, #footer address, #footer dd, #footer blockquote, #footer td, #footer th, #footer .textwidget, #sidebar p, #sidebar li, #sidebar address, #sidebar dd, #sidebar blockquote, #sidebar td, #sidebar th, #sidebar .textwidget, .article-header,.skills .views, .filter li a, .filterable-grid .overlay, .comment-container, .pin-article .aside p{ font-family:'Oxygen',Verdana, Geneva, sans-serif;}.article p, .article li, .article address, .article dd, .article blockquote, .article td, .article th { font-size:14px}h1.title, h2.title, h3.title, h4.title, h5.title, h6.title, h1, h2, h3, h4, h5, h6, #subheader p, #subheader h1, h3#reply-title, h3.comments,.pin-article .link a, .pin-article .quote p { font-family:'Yanone Kaffeesatz',Verdana, Geneva, sans-serif; } h1 {font-size:28px; }h2 { font-size:26px; }h3 { font-size:24px; }h4 { font-size:21px; }h5 { font-size:18px; }h6 { font-size:16px; }::-moz-selection { background-color: #48c9b0; } ::selection { background-color: #48c9b0; } article blockquote { border-left-color: #48c9b0; } #back-to-top a:hover, body.light #back-to-top a:hover, nav#widgetmenu li a:hover, nav#widgetmenu li:hover > a , nav#widgetmenu li.current-menu-item > a, nav#widgetmenu li.current-menu-ancestor > a, .pin-article .link a:hover, .pin-article .quote:hover, .skills .views.active, .skills .views:hover, .filter li:hover, .filter li.active, #searchform input[type=submit]:hover, .contact-form input[type=submit]:hover, .comment-form input[type=submit]:hover, .widget-category li a:hover, .tagcloud a:hover, .tabs li a:hover, .tabs li.ui-tabs-active a, .tabs li.ui-state-active a, .socials a:hover,.button:hover, .wp-pagenavi a:hover, .wp-pagenavi span.current, #wp-calendar #today, #wp-calendar #today a { background-color: #1abc9c; } #sidebar a:hover, .bottom a:hover, #footer a:hover, #logo a:hover, nav#mainmenu ul li a:hover, nav#mainmenu li:hover > a, nav#mainmenu ul li.current-menu-item > a,  nav#mainmenu ul li.current_page_item > a, nav#mainmenu ul li.current-menu-parent > a, nav#mainmenu ul li.current_page_ancestor > a, nav#mainmenu ul li.current-menu-ancestor > a, .pin-article h1.title a:hover, .filterable-grid  h4.title a:hover, .filterable-grid  h4.title a:focus, .entry-info a:hover { color: #1abc9c; } #back-to-top a:hover, nav#widgetmenu li a:hover, nav#widgetmenu li:hover > a , nav#widgetmenu li.current-menu-item > a, nav#widgetmenu li.current-menu-ancestor > a, .widget-category li a:hover, .toggle_container h5.element:hover, .toggle_container h5.inactive, .toggle_container h5.inactive:hover, .toggle_container h5.element:hover:last-of-type, .toggle_container h5.inactive:last-of-type, .toggle_container h5.inactive:hover:last-of-type  { border-color: #1abc9c; } #logo a, nav#mainmenu ul li a, nav#mainmenu ul ul li a { color: #ffffff; } #subheader, #subheader p, #subheader h1, #subheader p a, #subheader h1 a { color: #ffffff; } .bottom_widget a, .bottom_widget h3, .bottom_widget label, .bottom_widget caption, .bottom_widget p, .bottom_widget li, .bottom_widget address, .bottom_widget dd, .bottom_widget blockquote, .bottom_widget td, .bottom_widget th, .bottom_widget .textwidget { color: #ffffff; } #footer a, #footer p, #footer li, #footer address, #footer dd, #footer blockquote, #footer td, #footer th, #footer .textwidget  { color: #ffffff; } .bottom_socials a { color: #333333; } .bottom_socials a:hover { color: #ffffff; }
+    :css
+      .recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}
+  %body.home.page.page-id-2653.page-template.page-template-masonry-two-columns-sidebar.page-template-masonry-two-columns-sidebar-php
+    #cover
+    .style-picker
+      .style-form
+        %form{:action => '#', :method => 'get'}
+          %label Тема
+          %select#skins
+            %option{:value => 'orange'} Orange
+            %option{:selected => 'selected', :value => 'turquoise'} Turquoise
+            %option{:value => 'blue'} Blue
+            %option{:value => 'red'} Red
+            %option{:value => 'purple'} Purple
+            %option{:value => 'yellow'} Yellow
+            %option{:value => 'green'} Green
+            %option{:value => 'light_orange'} Light & Orange
+            %option{:value => 'light_turquoise'} Light & Turquoise
+            %option{:value => 'light_blue'} Light & Blue
+            %option{:value => 'light_red'} Light & Red
+            %option{:value => 'light_purple'} Light & Purple
+            %option{:value => 'light_yellow'} Light & Yellow
+            %option{:value => 'light_green'} Light & Green
+          %label Задний фон
+          %select#patterns
+            %option{:value => '/images/background/patterns/pattern1.jpg'} Pattern 1
+            %option{:value => '/images/background/patterns/pattern2.jpg'} Pattern 2
+            %option{:value => '/images/background/patterns/pattern3.jpg'} Pattern 3
+            %option{:value => '/images/background/patterns/pattern4.jpg'} Pattern 4
+            %option{:value => '/images/background/patterns/pattern5.jpg'} Pattern 5
+            %option{:value => '/images/background/patterns/pattern6.jpg'} Pattern 6
+            %option{:value => '/images/background/patterns/pattern7.jpg'} Pattern 7
+            %option{:value => '/images/background/patterns/pattern8.jpg'} Pattern 8
+            %option{:value => '/images/background/patterns/pattern9.jpg'} Pattern 9
+            %option{:value => '/images/background/patterns/pattern10.jpg'} Pattern 10
+            %option{:value => '/images/background/patterns/pattern11.jpg'} Pattern 11
+            %option{:selected => 'selected', :value => '/images/background/patterns/pattern12.jpg'} Pattern 12
+      .opentab
+        %input#themedir{:style => 'display:none; visibility:hidden', :type => 'hidden', :value => 'http://demo.themeinprogress.com/nova/wp-content/themes/nova'}/
+      .clear
+    %header#header
+      .container
+        .row
+          .span3
+            #logo
+              = link_to 'BlogNotik', root_path, :title => 'BlogNotik'
+          .span9
+            %nav#mainmenu
+              %ul#menu-main-menu.menu
+                %li#menu-item-2580.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-home.menu-item-has-children.menu-item-2580
+                  = link_to 'Главная', root_path
+                %li#menu-item-2583.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-has-children.menu-item-2583
+                  %a{:href => '/contact'} Контакты
+                - if current_user
+                  %li#menu-item-2635.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-2635
+                    = link_to 'Новый пост', new_post_path
+                  %li#menu-item-2624.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-2624
+                    = link_to 'Выйти', destroy_user_session_path, :method => :delete
+                - else
+                  %li#menu-item-2635.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-2635
+                    = link_to 'Вход', new_user_session_path
+                  %li#menu-item-2624.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-2624
+                    = link_to 'Регистрация', new_user_registration_path
+    = yield
+    %footer#footer
+      .container
+        .row
+          .span12.copyright
+            %p
+              Copyright BlogNotik 2015 - Powered by Vadimka Production
+    #back-to-top
+      %a{:href => '#', :style => ''}
+        %i.icon-chevron-up
+    %script{:src => 'http://demo.themeinprogress.com/nova/wp-content/cache/minify/000000/jcxBEsIgDIXhC1nQ8SIuvABCrKmQUAJtub1OnXEDi66__z3ixeg1DkjWFweiJ9GWQwDKQ4LoqwpIJ-pU01wgVV3w2yc4kK3oRsgHwmwesmdnvYd_VGAEaVQXdW3t6WETjw7S0N0GI0yp9o8JF_6NW4sJcq63F2ducS5o32LItSQ2sff3zigjVTJLCyvGDw.js', :type => 'text/javascript'}
