@@ -2,7 +2,7 @@
 
 Функционально новый подход к блогам
 
-## Локальный запуск
+## Running Locally
 
 Make sure you have Ruby installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
