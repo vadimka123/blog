@@ -17,3 +17,4 @@ $ rails server
 
 Приложение будет доступно по адрессу [localhost:3000](http://localhost:3000/).
 
+
